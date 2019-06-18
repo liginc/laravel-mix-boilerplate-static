@@ -1,0 +1,10 @@
+{
+  "general": {
+    "title": "Laravel Mix Boilerplate for Static Site"
+  },
+  "pages": {
+    "htmlSample": {
+      "title": "HTML Sample"
+    }
+  }
+}

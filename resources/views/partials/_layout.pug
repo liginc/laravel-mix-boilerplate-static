@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    block head
+    link(rel="stylesheet", href=mix('/assets/css/app.css'))
+  body
+    //- In development, if SVG is included in pug,
+    //- injection of changes such as CSS by BrowserSync is prevented
+    //- Because svg-spritemap-webpack-plugin reacts for all changes,
+    //- and it causes pug recompile and browser reloading
+    if process.env.NODE_ENV === 'production'
+      include /../../public/assets/svg/sprite.svg
+    block content
+    script(src=mix('/assets/js/app.js'))

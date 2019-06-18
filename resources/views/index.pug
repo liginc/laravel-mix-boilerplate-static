@@ -1,0 +1,37 @@
+extends /partials/_layout
+
+block head
+  title #{seed.variables.general.title}
+
+block content
+  div.js-target
+    h1 #{seed.variables.general.title}
+    ul
+      li.gif
+        img(
+          src=mix('/assets/images/sample.gif')
+          alt="SAMPLE.GIF"
+        )
+      li.jpeg
+        img(
+          src=mix('/assets/images/sample.jpeg')
+          alt="SAMPLE.JPEG"
+        )
+      li.jpg
+        img(
+          src=mix('/assets/images/sample.jpg')
+          alt="SAMPLE.JPG"
+        )
+      li.png
+        img(
+          src=mix('/assets/images/sample.png')
+          alt="SAMPLE.PNG"
+        )
+      li.svg-a
+        svg
+          title SAMPLE-A.SVG
+          use(xlink:href=svgSprite('/assets/svg/sprite.svg', '#sprite-sample-a'))
+      li.svg-b
+        svg
+          title SAMPLE-B.SVG
+          use(xlink:href=svgSprite('/assets/svg/sprite.svg', '#sprite-sample-b'))
