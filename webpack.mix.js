@@ -102,7 +102,7 @@ if (process.env.NODE_ENV === 'production') {
       {
         // To find targets exactly, requires test option that is function
         test: filePath => !!multimatch(filePath, [ 'assets/images/**/*' ]).length,
-        optipng: { optimizationLevel: 0 }, // 0 ~ 7
+        pngquant: { strip: true, quality: 100-100 }, // 0 ~ 100
         gifsicle: { optimizationLevel: 1 }, // 1 ~ 3
         plugins: [ require('imagemin-mozjpeg')({ quality: 100 }) ] // 0 ~ 100
       }
