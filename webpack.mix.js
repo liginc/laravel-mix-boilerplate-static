@@ -72,20 +72,20 @@ mix
   )
   .browserSync({
     open: false,
-    host: process.env.BROWSER_SYNC_HOST || 'localhost',
-    port: process.env.BROWSER_SYNC_PORT || 3000,
-    // If this setting is `${distRelativePath}/**/*`,
+    host: process.env.MIX_BROWSER_SYNC_HOST || 'localhost',
+    port: process.env.MIX_BROWSER_SYNC_PORT || 3000,
+    // If this setting is `${distDirName}/**/*`,
     // injection of changes such as CSS will be not available
     // https://github.com/JeffreyWay/laravel-mix/issues/1053
     files: [
       `${distRelativePath}/assets/**/*`,
     ],
     https:
-      process.env.BROWSER_SYNC_HTTPS_CERT &&
-      process.env.BROWSER_SYNC_HTTPS_KEY
+      process.env.MIX_BROWSER_SYNC_HTTPS_CERT &&
+      process.env.MIX_BROWSER_SYNC_HTTPS_KEY
         ? {
-          cert: process.env.BROWSER_SYNC_HTTPS_CERT,
-          key: process.env.BROWSER_SYNC_HTTPS_KEY
+          cert: process.env.MIX_BROWSER_SYNC_HTTPS_CERT,
+          key: process.env.MIX_BROWSER_SYNC_HTTPS_KEY
         }
         : false
     // Reloading is necessary to see the change of the SVG file
