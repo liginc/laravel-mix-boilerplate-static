@@ -9,24 +9,28 @@ require('laravel-mix-stylelint')
 require('laravel-mix-imagemin')
 mix.pug = require('@dsktschy/laravel-mix-pug')
 
-const srcDirName = 'resources'
-const distDirName = 'public'
+const srcRelativePath =
+  (process.env.MIX_SRC_RELATIVE_PATH || 'resources')
+    .replace(/\/$/, '')
+const distRelativePath =
+  (process.env.MIX_DIST_RELATIVE_PATH || 'public')
+    .replace(/\/$/, '')
 
 // Clean public directory
-fs.removeSync(distDirName)
+fs.removeSync(distRelativePath)
 
 mix
   // Set output directory of mix-manifest.json
-  .setPublicPath(distDirName)
+  .setPublicPath(distRelativePath)
   .polyfill()
   .js(
-    `${srcDirName}/assets/js/app.js`,
-    `${distDirName}/assets/js`
+    `${srcRelativePath}/assets/js/app.js`,
+    `${distRelativePath}/assets/js`
   )
   .eslint()
   .sass(
-    `${srcDirName}/assets/css/app.scss`,
-    `${distDirName}/assets/css`
+    `${srcRelativePath}/assets/css/app.scss`,
+    `${distRelativePath}/assets/css`
   )
   .stylelint()
   .options({ processCssUrls: false })
@@ -36,7 +40,7 @@ mix
         // Subdirectories (sprite/**/*.svg) are not allowed
         // Because same ID attribute is output multiple times,
         // if file names are duplicated among multiple directories
-        `${srcDirName}/assets/svg/sprite/*.svg`,
+        `${srcRelativePath}/assets/svg/sprite/*.svg`,
         {
           output: {
             filename: 'assets/svg/sprite.svg',
@@ -61,31 +65,31 @@ mix
   // Copy SVG that is not sprite
   .copyWatched(
     [
-      `${srcDirName}/assets/svg/!(sprite)`,
-      `${srcDirName}/assets/svg/!(sprite)/**/*`
+      `${srcRelativePath}/assets/svg/!(sprite)`,
+      `${srcRelativePath}/assets/svg/!(sprite)/**/*`
     ],
-    `${distDirName}/assets/svg`,
-    { base: `${srcDirName}/assets/svg` }
+    `${distRelativePath}/assets/svg`,
+    { base: `${srcRelativePath}/assets/svg` }
   )
   .browserSync({
     open: false,
-    host: process.env.BROWSER_SYNC_HOST || 'localhost',
-    port: process.env.BROWSER_SYNC_PORT || 3000,
+    host: process.env.MIX_BROWSER_SYNC_HOST || 'localhost',
+    port: process.env.MIX_BROWSER_SYNC_PORT || 3000,
     proxy: false,
-    server: distDirName,
-    // If this setting is `${distDirName}/**/*`,
+    server: distRelativePath,
+    // If this setting is `${distRelativePath}/**/*`,
     // injection of changes such as CSS will be not available
     // https://github.com/JeffreyWay/laravel-mix/issues/1053
     files: [
-      `${distDirName}/assets/**/*`,
-      `${distDirName}/**/*.html`
+      `${distRelativePath}/assets/**/*`,
+      `${distRelativePath}/**/*.html`
     ],
     https:
-      process.env.BROWSER_SYNC_HTTPS_CERT &&
-      process.env.BROWSER_SYNC_HTTPS_KEY
+      process.env.MIX_BROWSER_SYNC_HTTPS_CERT &&
+      process.env.MIX_BROWSER_SYNC_HTTPS_KEY
         ? {
-          cert: process.env.BROWSER_SYNC_HTTPS_CERT,
-          key: process.env.BROWSER_SYNC_HTTPS_KEY
+          cert: process.env.MIX_BROWSER_SYNC_HTTPS_CERT,
+          key: process.env.MIX_BROWSER_SYNC_HTTPS_KEY
         }
         : false
     // Reloading is necessary to see the change of the SVG file
@@ -98,11 +102,11 @@ mix
   // https://webpack.js.org/configuration/devtool/#devtool
   .sourceMaps(false, 'inline-cheap-module-source-map')
   .pug(
-    `${srcDirName}/views/**/[!_]*.pug`,
-    distDirName,
+    `${srcRelativePath}/views/**/[!_]*.pug`,
+    distRelativePath,
     {
       // Path to directory that contains JSON or YAML
-      seeds: srcDirName,
+      seeds: srcRelativePath,
       // Variables and functions
       locals: {
         // Function for cache busting
@@ -117,11 +121,11 @@ mix
           process.env.NODE_ENV === 'production' ? id : filePath + id
       },
       // Base directory
-      excludePath: `${srcDirName}/views`,
+      excludePath: `${srcRelativePath}/views`,
       // Options for Pug
       pug: {
         // Required to include partials with root relative path
-        basedir: `${srcDirName}/views`
+        basedir: `${srcRelativePath}/views`
       }
     }
   )
@@ -133,7 +137,7 @@ if (process.env.NODE_ENV === 'production') {
     .imagemin(
       // Options for copying
       [ 'assets/images/**/*' ],
-      { context: srcDirName },
+      { context: srcRelativePath },
       // Options for optimization
       {
         // To find targets exactly, requires test option that is function
@@ -145,8 +149,8 @@ if (process.env.NODE_ENV === 'production') {
     )
     // Delete unnecesary files
     .then(() => {
-      fs.removeSync(`${distDirName}/assets/js/.svg-dummy-module.js`)
-      fs.removeSync(`${distDirName}/mix-manifest.json`)
+      fs.removeSync(`${distRelativePath}/assets/js/.svg-dummy-module.js`)
+      fs.removeSync(`${distRelativePath}/mix-manifest.json`)
     })
     // It's difficult handle public/mix-manifest.json from static pages
     // Can use function of Pug instead of PHP, to set parameter for cache busting
@@ -158,8 +162,8 @@ else {
   mix
     // Copy images without optimization in development
     .copyWatched(
-      `${srcDirName}/assets/images`,
-      `${distDirName}/assets/images`,
-      { base: `${srcDirName}/assets/images` }
+      `${srcRelativePath}/assets/images`,
+      `${distRelativePath}/assets/images`,
+      { base: `${srcRelativePath}/assets/images` }
     )
 }
