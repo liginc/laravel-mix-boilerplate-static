@@ -28,6 +28,7 @@ mix
     `${distDirName}/assets/css`
   )
   .stylelint()
+  .options({ processCssUrls: false })
   .webpackConfig({
     plugins: [
       new SVGSpritemapPlugin(
