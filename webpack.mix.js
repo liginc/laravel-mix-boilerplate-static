@@ -7,7 +7,7 @@ require('laravel-mix-copy-watched')
 require('laravel-mix-eslint')
 require('laravel-mix-stylelint')
 require('laravel-mix-imagemin')
-mix.pug = require('@dsktschy/laravel-mix-pug')
+require('laravel-mix-ejs')
 
 const srcRelativePath =
   (process.env.MIX_SRC_RELATIVE_PATH || 'resources')
@@ -101,32 +101,35 @@ mix
   // Second argument is source map type. Note that several types don't output map for CSS
   // https://webpack.js.org/configuration/devtool/#devtool
   .sourceMaps(false, 'inline-cheap-module-source-map')
-  .pug(
-    `${srcRelativePath}/views/**/[!_]*.pug`,
+  .ejs(
+    `${srcRelativePath}/views`,
     distRelativePath,
+    // Variables and functions
     {
-      // Path to directory that contains JSON or YAML
-      seeds: srcRelativePath,
-      // Variables and functions
-      locals: {
         // Function for cache busting
-        mix: (filePath = '') => filePath + '?id=' + Date.now(),
+        mix: (filePath = '') =>
+          process.env.NODE_ENV === 'production'
+            ? filePath + '?id=' + Date.now()
+            : filePath,
         // Function to create path for SVG sprite, according to NODE_ENV
         // Requires path to sprite SVG file and ID
-        // In development, if SVG is included in pug,
+        // In development, if SVG is included in EJS,
         // injection of changes such as CSS by BrowserSync is prevented
         // Because svg-spritemap-webpack-plugin reacts for all changes,
-        // and it causes pug recompile and browser reloading
+        // and it causes EJS recompile and browser reloading
         svgSprite: (filePath = '', id = '') =>
-          process.env.NODE_ENV === 'production' ? id : filePath + id
-      },
+          process.env.NODE_ENV === 'production'
+            ? id
+            : filePath + id
+    },
+    // Options
+    {
       // Base directory
-      excludePath: `${srcRelativePath}/views`,
-      // Options for Pug
-      pug: {
-        // Required to include partials with root relative path
-        basedir: `${srcRelativePath}/views`
-      }
+      base: `${srcRelativePath}/views`,
+      // Required to include partials with root relative path
+      root: `${srcRelativePath}/views`,
+      // Don't compile partials directory
+      partials: `${srcRelativePath}/views/partials`
     }
   )
 
@@ -153,7 +156,7 @@ if (process.env.NODE_ENV === 'production') {
       fs.removeSync(`${distRelativePath}/mix-manifest.json`)
     })
     // It's difficult handle public/mix-manifest.json from static pages
-    // Can use function of Pug instead of PHP, to set parameter for cache busting
+    // Can use function of EJS instead of PHP, to set parameter for cache busting
     // .version()
 }
 
