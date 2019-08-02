@@ -89,14 +89,14 @@ mix
     `${srcRelativePath}/views`,
     distRelativePath,
     {
-        mix: (filePath = '') =>
-          process.env.NODE_ENV === 'production'
-            ? basePath + filePath + '?id=' + Date.now()
-            : basePath + filePath,
-        svgSprite: (filePath = '', id = '') =>
-          process.env.NODE_ENV === 'production'
-            ? id
-            : basePath + filePath + id
+      mix: (filePath = '') =>
+        process.env.NODE_ENV === 'production'
+          ? basePath + filePath + '?id=' + Date.now()
+          : basePath + filePath,
+      svgSprite: (filePath = '', id = '') =>
+        process.env.NODE_ENV === 'production'
+          ? id
+          : basePath + filePath + id
     },
     {
       base: `${srcRelativePath}/views`,
