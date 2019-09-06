@@ -4,8 +4,8 @@
   "description": "Boilerplate for Static site, based on Laravel Mix",
   "main": "index.js",
   "scripts": {
-    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "dev": "npm run watch",
     "prod": "npm run production"
   },
@@ -17,6 +17,7 @@
     "browser-sync": "^2.26.5",
     "browser-sync-webpack-plugin": "^2.2.2",
     "copy-webpack-plugin": "^5.0.3",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.2",
