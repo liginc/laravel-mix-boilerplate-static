@@ -21,6 +21,7 @@
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.2",
+    "follow-engine-strict": "^0.1.0",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-webpack-plugin": "^2.4.2",
     "laravel-mix": "^4.0.16",
