@@ -7,6 +7,7 @@ require('laravel-mix-copy-watched')
 require('laravel-mix-eslint')
 require('laravel-mix-stylelint')
 require('laravel-mix-imagemin')
+require('laravel-mix-webp')
 require('laravel-mix-ejs')
 
 const srcRelativePath =
@@ -117,6 +118,10 @@ if (process.env.NODE_ENV === 'production') {
         plugins: [ require('imagemin-mozjpeg')({ quality: 100 }) ] // 0 ~ 100
       }
     )
+    .ImageWebp({
+      from: `${srcRelativePath}/assets/images`,
+      to: `${distRelativePath}/assets/images`,
+    })
     .then(() => {
       fs.removeSync(`${distRelativePath}/assets/js/.svg-dummy-module.js`)
       fs.removeSync(`${distRelativePath}/mix-manifest.json`)
