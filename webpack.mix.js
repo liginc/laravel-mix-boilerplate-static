@@ -115,7 +115,7 @@ if (process.env.NODE_ENV === 'production') {
       { context: srcRelativePath },
       {
         test: filePath => !!multimatch(filePath, [ 'assets/images/**/*' ]).length,
-        pngquant: { strip: true, quality: 100-100 }, // 0 ~ 100
+        pngquant: { strip: true, quality: '100-100' }, // 'min-max'
         gifsicle: { optimizationLevel: 1 }, // 1 ~ 3
         plugins: [ require('imagemin-mozjpeg')({ quality: 100 }) ] // 0 ~ 100
       }
