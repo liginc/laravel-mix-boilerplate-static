@@ -132,7 +132,9 @@ if (process.env.NODE_ENV === 'production') {
       const extname = path.extname(relativePath)
       const regExp = new RegExp(`${extname}$`, 'i')
       const pathWithoutExtname = relativePath.replace(regExp, '')
-      sharp(relativePath).toFile(`${pathWithoutExtname}.webp`);
+      sharp(relativePath)
+        .toFormat('webp', { quality: 100 })
+        .toFile(`${pathWithoutExtname}.webp`);
   }
 }
 
