@@ -1,29 +1,32 @@
 # Laravel Mix Boilerplate for Static Site
 
-## 使用法
+## 使用方法
 
-1. `package.json` を開き、各種プロパティを変更してください。
+1. 以下がインストール済みであることを確認してください。
+- Node.js >= 12.13.0（nodeenv, nodebrew などの利用が望ましい）
+
+2. `package.json` を開き、各種プロパティを変更してください。
 ```
 "name": "foobar-japan",
 "description": "FooBar Japan Corporate site",
 ```
 
-2. `.env-sample` を複製し、名前を `.env` に変更してください。
+3. `.env-sample` を複製し、名前を `.env` に変更してください。
 ```
 $ cp .env-sample .env
 ```
 
-3. 依存パッケージをインストールします。
+4. 依存パッケージをインストールします。
 ```
 $ npm i
 ```
 
-4. 開発用コマンドを実行し、`http://localhost:3000` へアクセスすると、サンプルページが表示されます。
+5. 開発用コマンドを実行し、`http://localhost:3000` へアクセスすると、サンプルページが表示されます。
 ```
 $ npm run dev
 ```
 
-5. 本番環境へ反映する前には、本番用コマンドを実行してください。
+6. 本番環境へ反映する前には、本番用コマンドを実行してください。
 ```
 $ npm run prod
 ```
