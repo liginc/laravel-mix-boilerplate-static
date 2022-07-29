@@ -1,5 +1,14 @@
-node_modules
-npm-debug.log
+.idea
+.atom
+.vscode
+.DS_Store
+.sass-cache
 .env
+node_modules
+guide
+*.map
+*.log
+!.keep
+!.gitkeep
 public
 resources/assets/images/**/*.webp
