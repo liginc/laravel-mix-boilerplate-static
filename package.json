@@ -14,7 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "browser-sync": "^2.26.13",
+    "browser-sync": "^2.29.1",
     "browser-sync-webpack-plugin": "^2.2.2",
     "copy-webpack-plugin": "^5.1.2",
     "cross-env": "^5.2.0",
